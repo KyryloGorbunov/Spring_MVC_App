@@ -22,21 +22,21 @@ public class PersonDAO {
     }
 
     public List<Person> index() {
-        return jdbcTemplate.query("SELECT * FROM person", new PersonMapper()); //we can change PersonMapper for: new BeanPropertyRowMapper<>(Person.class)
+        return jdbcTemplate.query("SELECT * FROM Person", new PersonMapper()); //we can change PersonMapper for: new BeanPropertyRowMapper<>(Person.class)
     }
 
     public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{id}, new PersonMapper()) // new BeanPropertyRowMapper<>(Person.class)
+        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{id}, new PersonMapper()) // new BeanPropertyRowMapper<>(Person.class)
                 .stream().findAny().orElse(null);
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO person VALUES (1, ?, ?, ?)", person.getName(), person.getAge(),
+        jdbcTemplate.update("INSERT INTO Person(name, age, email) VALUES (?, ?, ?)", person.getName(), person.getAge(),
                 person.getEmail());
     }
 
     public void update(int id, Person updatedPerson) {
-        jdbcTemplate.update("UPDATE person SET name=?, age=?, email=? WHERE id=?", updatedPerson.getName(),
+        jdbcTemplate.update("UPDATE Person SET name=?, age=?, email=? WHERE id=?", updatedPerson.getName(),
                 updatedPerson.getAge(), updatedPerson.getEmail(), id);
     }
 
@@ -54,7 +54,7 @@ public class PersonDAO {
         long before = System.currentTimeMillis();
 
         for (Person person : people) {
-            jdbcTemplate.update("INSERT INTO person VALUES (?, ?, ?, ?)", person.getId(), person.getName(), person.getAge(),
+            jdbcTemplate.update("INSERT INTO Person VALUES (?, ?, ?, ?)", person.getId(), person.getName(), person.getAge(),
                     person.getEmail());
         }
 
@@ -68,7 +68,7 @@ public class PersonDAO {
 
         long before = System.currentTimeMillis();
 
-        jdbcTemplate.batchUpdate("INSERT INTO person VALUES (?, ?, ?, ?)",
+        jdbcTemplate.batchUpdate("INSERT INTO Person VALUES (?, ?, ?, ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
