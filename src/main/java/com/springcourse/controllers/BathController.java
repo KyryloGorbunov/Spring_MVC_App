@@ -22,7 +22,7 @@ public class BathController {
         return "batch/index";
     }
 
-    @GetMapping("/without")
+/*    @GetMapping("/without")
     public String withoutBath() {
         personDAO.testMultipleUpdate();
         return "redirect:/people";
@@ -32,5 +32,5 @@ public class BathController {
     public String withBath() {
         personDAO.testBathUpdate();
         return "redirect:/people";
-    }
+    }*/
 }
