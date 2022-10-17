@@ -1,18 +1,9 @@
 package com.springcourse.dao;
 
-import com.springcourse.models.Person;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-@Component
+//@Component
 public class PersonDAO {
 
-    private final SessionFactory sessionFactory;
+/*    private final SessionFactory sessionFactory;
 
     @Autowired
     public PersonDAO(SessionFactory sessionFactory) {
@@ -53,7 +44,7 @@ public class PersonDAO {
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(Person.class, id));
-    }
+    }*/
 
     /************ JDBC Template ***********************************
      private final JdbcTemplate jdbcTemplate;

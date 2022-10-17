@@ -1,17 +1,10 @@
 package com.springcourse.controllers;
 
-import com.springcourse.dao.PersonDAO;
-import com.springcourse.models.Person;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-@Controller
-@RequestMapping("/admin")
+//@Controller
+//@RequestMapping("/admin")
 public class AdminController {
 
-    private final PersonDAO personDAO;
+/*    private final PersonDAO personDAO;
 
     @Autowired
     public AdminController(PersonDAO personDAO) {
@@ -30,5 +23,5 @@ public class AdminController {
         System.out.println(person.getId());
 
         return "redirect:/people";
-    }
+    }*/
 }
