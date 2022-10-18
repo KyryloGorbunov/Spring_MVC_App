@@ -1,6 +1,7 @@
 package com.springcourse.controllers;
 
 import com.springcourse.models.Person;
+import com.springcourse.services.ItemService;
 import com.springcourse.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,15 +17,17 @@ public class PeopleController {
 
     /***********Hibernate***********/
 //    private final PersonDAO personDAO;
+    //    private final PersonValidator personValidator;
 
     private final PeopleService peopleService;
-//    private final PersonValidator personValidator;
+    private final ItemService itemService;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, ItemService itemService) {
         this.peopleService = peopleService;
 //        this.personDAO = personDAO;
 //        this.personValidator = personValidator;
+        this.itemService = itemService;
     }
 
     @GetMapping()
@@ -34,6 +37,11 @@ public class PeopleController {
 //        model.addAttribute("people", personDAO.index());
 
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("Airpods");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
 
         return "people/index";
     }

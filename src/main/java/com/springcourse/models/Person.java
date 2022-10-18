@@ -2,6 +2,7 @@ package com.springcourse.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -32,6 +33,9 @@ public class Person {
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{5}",
             message = "Your address should be in this format: Country, City, Postal Code (5 digits)")
     private String address;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 
     public Person() {
     }
@@ -82,5 +86,17 @@ public class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", items=" + items +
+                '}';
     }
 }
