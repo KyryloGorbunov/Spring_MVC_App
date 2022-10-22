@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Person")
@@ -30,8 +31,8 @@ public class Person {
     @Email
     private String email;
 
-    //Country, City, Postal Code (5 digits)
-    //Spain, Valencia, 46000
+    /** Country, City,     Postal Code (5 digits)
+        Spain,   Valencia, 46000  **/
     @Column(name = "address")
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{5}",
             message = "Your address should be in this format: Country, City, Postal Code (5 digits)")
@@ -57,7 +58,6 @@ public class Person {
 
 
     public Person(String name, int age) {
-//        this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
@@ -134,6 +134,19 @@ public class Person {
 
     public void setMood(Mood mood) {
         this.mood = mood;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && age == person.age && Objects.equals(name, person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age);
     }
 
     @Override

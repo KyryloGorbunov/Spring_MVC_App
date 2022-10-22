@@ -1,5 +1,6 @@
 package com.springcourse.controllers;
 
+import com.springcourse.dao.PersonDAO;
 import com.springcourse.models.Person;
 import com.springcourse.services.ItemService;
 import com.springcourse.services.PeopleService;
@@ -15,31 +16,26 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
 
-    /***********Hibernate***********/
-//    private final PersonDAO personDAO;
-    //    private final PersonValidator personValidator;
-
     private final PeopleService peopleService;
     private final ItemService itemService;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public PeopleController(PeopleService peopleService, ItemService itemService) {
+    public PeopleController(PeopleService peopleService, ItemService itemService, PersonDAO personDAO) {
         this.peopleService = peopleService;
-//        this.personDAO = personDAO;
-//        this.personValidator = personValidator;
         this.itemService = itemService;
+        this.personDAO = personDAO;
     }
 
     @GetMapping()
     public String index(Model model) {
 
-        /***********Hibernate***********/
-//        model.addAttribute("people", personDAO.index());
-
         model.addAttribute("people", peopleService.findAll());
 
         itemService.findByItemName("Airpods");
         itemService.findByOwner(peopleService.findAll().get(0));
+
+//        personDAO.testNPlus1();
 
         peopleService.test();
 
@@ -48,18 +44,10 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        /***********Hibernate***********/
-//        model.addAttribute("person", personDAO.show(id));
 
         model.addAttribute("person", peopleService.findOne(id));
         return "people/show";
     }
-
-/*    @GetMapping("/new")
-    public String newPerson(Model model) {
-        model.addAttribute("person", new Person());
-        return "people/new";
-    }*/
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person) {
@@ -68,14 +56,10 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-//        personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
-
-        /***********Hibernate***********/
-//        personDAO.save(person);
 
         peopleService.save(person);
 
@@ -84,9 +68,6 @@ public class PeopleController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-
-        /***********Hibernate***********/
-//        model.addAttribute("person", personDAO.show(id));
 
         model.addAttribute("person", peopleService.findOne(id));
 
@@ -101,18 +82,12 @@ public class PeopleController {
             return "people/edit";
         }
 
-        /***********Hibernate***********/
-//        personDAO.update(id, person);
-
         peopleService.update(id, person);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-
-        /***********Hibernate***********/
-//        personDAO.delete(id);
 
         peopleService.delete(id);
         return "redirect:/people";
